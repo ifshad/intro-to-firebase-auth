@@ -4,11 +4,16 @@ import app from './firebase/firebase.init';
 import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth'
 
 function App() {
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
   const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
   console.log(users)
+  
+  // Google & Github Signin
   const handleGoogleSignIn = () => {
     signInWithPopup(auth, googleProvider)
       .then(result => {
@@ -40,6 +45,19 @@ function App() {
       })
   }
 
+  // Email pass sign up
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(email, password)
+  }
+
+  const handleEmailChange = e => {
+    setEmail(e.target.value)
+  }
+
+  const handlePassChange = e => {
+    setPassword(e.target.value)
+  }
 
   return (
     <>
@@ -64,6 +82,11 @@ function App() {
             <h3>Phone: {users.phoneNumber}</h3>}
         </div>
       }
+      <form onSubmit={handleSubmit}>
+        <input onChange={handleEmailChange} type="email" name="email" id="email" />
+        <input onChange={handlePassChange} type="password" name="password" id="password" />
+        <button>Sign Up</button>
+      </form>
     </>
   );
 };
