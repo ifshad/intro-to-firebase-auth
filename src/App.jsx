@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import app from './firebase/firebase.init';
-import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth'
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, signInWithPopup, signOut } from 'firebase/auth'
 
 function App() {
   const [users, setUsers] = useState();
@@ -59,6 +59,15 @@ function App() {
     setPassword(e.target.value)
   }
 
+  // creating email-password auth
+  createUserWithEmailAndPassword(auth, email, password)
+  .then(result=>{
+    console.log(result)
+  })
+  .catch(error=>{
+    console.log(error)
+  });
+
   return (
     <>
       <h1>Firebase Authentication</h1>
@@ -89,7 +98,7 @@ function App() {
       </form>
     </>
   );
-};
+}
 
 
 export default App
